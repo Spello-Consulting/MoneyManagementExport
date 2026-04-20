@@ -2,13 +2,21 @@
 import re
 import sys
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from playwright.sync_api import sync_playwright
-from sc_utility import CSVReader, DateHelper, SCCommon, SCConfigManager, SCLogger
+from sc_foundation import CSVReader, DateHelper, SCCommon, SCConfigManager, SCLogger
 
 from config_schemas import ConfigSchema
 
 CONFIG_FILE = "config.yaml"
+
+
+def find_table_cells_by_label(soup: BeautifulSoup, label: str) -> list[Tag]:
+    """Return td elements whose text matches the given label."""
+    return [
+        cell for cell in soup.find_all("td")
+        if isinstance(cell, Tag) and re.search(label, cell.get_text(strip=True), re.IGNORECASE)
+    ]
 
 
 def get_browser_context(config, logger):
@@ -117,7 +125,7 @@ def extract_fund_data(logger, fund, html: str) -> dict | None:
     }
 
     # First get the exit price. Find all table cells containing "Exit Price:"
-    exit_price_cells = soup.find_all("td", string=re.compile(r"Exit Price:", re.IGNORECASE))
+    exit_price_cells = find_table_cells_by_label(soup, r"Exit Price:")
 
     for cell in exit_price_cells:
         # Get the next sibling cell in the same row
@@ -129,7 +137,7 @@ def extract_fund_data(logger, fund, html: str) -> dict | None:
             if match:
                 price_str, date_str = match.groups()
                 fund_data["Price"] = float(price_str)
-                fund_data["Date"] = DateHelper.parse_date(date_str, "%d/%m/%Y")
+                fund_data["Date"] = DateHelper.extract(date_str, "%d/%m/%Y")
             else:
                 # If pattern doesn't match, try to extract just the price
                 price_match = re.search(r"\$?([\d.]+)", cell_text)
@@ -142,7 +150,7 @@ def extract_fund_data(logger, fund, html: str) -> dict | None:
         fund_data["Name"] = fund_name_tag.text.strip()
 
     # Now get the symbol
-    symbol_cells = soup.find_all("td", string=re.compile(r"APIR code:", re.IGNORECASE))
+    symbol_cells = find_table_cells_by_label(soup, r"APIR code:")
     for cell in symbol_cells:
         # Get the next sibling cell in the same row
         next_cell = cell.find_next_sibling("td")
@@ -150,7 +158,7 @@ def extract_fund_data(logger, fund, html: str) -> dict | None:
             fund_data["Symbol"] = next_cell.text.strip()
 
     # Now get the currency
-    currency_cells = soup.find_all("td", string=re.compile(r"Currency:", re.IGNORECASE))
+    currency_cells = find_table_cells_by_label(soup, r"Currency:")
     for cell in currency_cells:
         # Get the next sibling cell in the same row
         next_cell = cell.find_next_sibling("td")
