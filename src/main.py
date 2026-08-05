@@ -1,4 +1,5 @@
 """Money Management Exporter."""
+import argparse
 import re
 import sys
 
@@ -9,6 +10,28 @@ from sc_foundation import CSVReader, DateHelper, SCCommon, SCConfigManager, SCLo
 from config_schemas import ConfigSchema
 
 CONFIG_FILE = "config.yaml"
+
+
+def parse_command_line_args(argv=None) -> argparse.Namespace:
+    """
+    Parses command line arguments.
+
+    Args:
+        argv (list[str] | None): The argument list to parse, or None to use sys.argv.
+
+    Returns:
+        argparse.Namespace: The parsed command line arguments.
+    """
+    parser = argparse.ArgumentParser(
+        prog="MoneyManagementExport",
+        description="Download Australian wholesale fund prices from moneymanagement.com.au.",
+    )
+    parser.add_argument(
+        "--config",
+        default=CONFIG_FILE,
+        help=f"Path to the yaml config file to use (default: {CONFIG_FILE})",
+    )
+    return parser.parse_args(argv)
 
 
 def find_table_cells_by_label(soup: BeautifulSoup, label: str) -> list[Tag]:
@@ -256,12 +279,13 @@ def save_prices_to_csv(fund_prices, config, logger, header_config):
 
 def main():
     """Get our default schema, validation schema, and placeholders."""
+    args = parse_command_line_args()
     schemas = ConfigSchema()
 
     # Initialize the SCConfigManager class
     try:
         config = SCConfigManager(
-            config_file=CONFIG_FILE,
+            config_file=args.config,
             default_config=schemas.default,
             validation_schema=schemas.validation,
             placeholders=schemas.placeholders

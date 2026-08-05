@@ -1,0 +1,1 @@
+10 5 * * * caffeinate -d -i -m -s -u -t 300 /Users/nick/scripts/MoneyManagementExport/scripts/launch.sh >/Users/nick/scripts/MoneyManagementExport/logs/crontab.log 2>&1

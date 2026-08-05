@@ -1,22 +1,20 @@
 [project]
 name = "MoneyManagementExport"
-version = "1.1.0"
+version = "1.2.0"
 description = "Download Australian wholesale fund prices from moneymanagement.com.au."
 readme = "README.md"
 requires-python = ">=3.13"
-launch_path="main.py"
+launch_path="src/main.py"
 dependencies = [
     "beautifulsoup4>=4.13.4",
     "bs4>=0.0.2",
     "playwright>=1.53.0",
     "requests>=2.32.4",
-    "sc-foundation-services>=3.0.2",
+    "sc-foundation-services>=3.3.0",
 ]
 
 [dev.env.sync]
 remote="~/Library/CloudStorage/Dropbox/Development/dev_setup/app_config/MoneyManagementExport"
 patterns = [
-    ".env",
-    "config.yaml",
-    "logfile.log",
+    "data/*.csv",
 ]

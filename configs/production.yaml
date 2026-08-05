@@ -1,0 +1,32 @@
+MoneyManagement:
+  HeadlessMode: True
+  PageLoad: 5
+  Funds: 
+    - Symbol: CSA0038AU
+      Name: "Bentham Global Income (FPSL)"
+      URL: "https://investmentcentre.moneymanagement.com.au/factsheets/AH/l1o7/bentham-global-income"
+    - Symbol: ETL0018AU
+      Name: "PIMCO Global Bond"
+      URL: "https://investmentcentre.moneymanagement.com.au/factsheets/AH/09x2/pimco-global-bond-wholesale"
+    - Symbol: HBC0011AU
+      Name: "Merlon Australian Share Income (FPL)"
+      URL: "https://investmentcentre.moneymanagement.com.au/factsheets/AH/l1l3/merlon-australian-share-income"
+    - Symbol: PLA0004AU
+      Name: "Platinum Asia"
+      URL: "https://investmentcentre.moneymanagement.com.au/factsheets/AH/a5j0/platinum-asia-c"
+    - Symbol: RFA0025AU
+      Name: "Pendal Horizon Sustainable Australian Shares"
+      URL: "https://investmentcentre.moneymanagement.com.au/factsheets/AH/lte1/pendal-horizon-sustainable-australian-share"
+
+Files:
+  OutputCSV: "/Users/nick/Library/CloudStorage/Dropbox/ProdFinance/SecurityPrices/fund_prices.csv"
+  DaysToSave: 365
+  LogfileName: logs/logfile.log
+  LogfileMaxLines: 200
+  LogfileVerbosity: detailed
+  ConsoleVerbosity: detailed
+
+Email:
+  EnableEmail: True
+  SendEmailsTo: nick@elseyworld.com
+  SubjectPrefix: "[Prod MoneyManagement Exporter]: "
