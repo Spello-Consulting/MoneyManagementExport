@@ -19,7 +19,7 @@ MoneyManagement:
       URL: "https://investmentcentre.moneymanagement.com.au/factsheets/AH/lte1/pendal-horizon-sustainable-australian-share"
 
 Files:
-  OutputCSV: data/price_data.csv
+  OutputCSV: data/fund_prices.csv
   DaysToSave: 365
   LogfileName: logs/logfile.log
   LogfileMaxLines: 200
