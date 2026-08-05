@@ -45,13 +45,8 @@ Files:
     LogfileVerbosity: detailed
     ConsoleVerbosity: detailed
 
-Email:
+Email:  # Use environment varibles for other SMTP settings
     EnableEmail: True
-    SendEmailsTo: john.doe@gmail.com
-    SMTPServer: smtp.gmail.com
-    SMTPPort: 587
-    SMTPUsername: john.doe@gmail.com
-    SMTPPassword: <Your SMTP password>
     SubjectPrefix: 
 ```
 
