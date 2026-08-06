@@ -28,5 +28,4 @@ Files:
 
 Email:
   EnableEmail: True
-  SendEmailsTo: nick@elseyworld.com
   SubjectPrefix: "[Prod MoneyManagement Exporter]: "
