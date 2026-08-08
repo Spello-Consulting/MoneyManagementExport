@@ -12,9 +12,3 @@ dependencies = [
     "requests>=2.32.4",
     "sc-foundation-services>=3.3.0",
 ]
-
-[dev.env.sync]
-remote="~/Library/CloudStorage/Dropbox/Development/dev_setup/app_config/MoneyManagementExport"
-patterns = [
-    "data/*.csv",
-]
