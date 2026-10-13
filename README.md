@@ -5,7 +5,7 @@ This app is designed to download Australian wholesale fund prices from moneymana
 * Extracts price, effective date, fund name, symbol and currency from a specified URL
 * Save price data to a CSV 
 * Error and retry handling
-* Designed to be run as a scheduled task (e.g. from crontab)
+* Designed to be run as a scheduled task (scheduled by the [finance_orchestrator](https://github.com/NickElseySpelloC/finance_orchestrator) project)
 * Can send email notifications when there is a critical failure.
 
 # Installation & Setup
@@ -86,6 +86,9 @@ Run the app using the relavant shell script for your operating system:
 
     launch.sh
 
+# Scheduling and Deployment
+This app is run daily by the [finance_orchestrator](https://github.com/NickElseySpelloC/finance_orchestrator) project, which handles waking the Mac, keeping it awake, the launchd user agent and running the daily finance jobs in order. See its README for the full deployment procedure. This app no longer has its own crontab entry.
+
 # Troubleshooting
 ## Playwright not installed exception
 After doing `uv sync` to download the playwright library you must then do:![alt](
@@ -96,13 +99,3 @@ You only need to do this once
 
 ## "No module named xxx"
 Ensure all the Python modules are installed in the virtual environment. Make sure you are running the app via the *launch* script.
-
-## ModuleNotFoundError: No module named 'requests'
-If you can run the script just fine from the command line, but you're getting this error when running from crontab, make sure the crontab environment has the Python3 folder in it's path. First, at the command line find out where python3 is being run from:
-
-`which python3`
-
-And then add this to a PATH command in your crontab:
-
-`PATH=/usr/local/bin:/usr/bin:/bin`
-`0 8 * * * /Users/bob/scripts/InvestSmartExport/launch.sh`
