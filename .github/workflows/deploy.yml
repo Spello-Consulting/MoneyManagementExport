@@ -21,5 +21,10 @@ jobs:
       matrix:
         environment: ${{ fromJSON(inputs.environment == 'both' && '["MacMiniIT","MacMiniAU"]' || format('["{0}"]', inputs.environment)) }}
     steps:
+      # - name: Pull latest from GitHub
+      #   run: git -C /Users/nick/scripts/MoneyManagementExport pull
       - name: Pull latest from GitHub
-        run: git -C /Users/nick/scripts/MoneyManagementExport pull
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          sudo --chdir=/Users/nick/scripts/MoneyManagementExport /Users/nick/scripts/pyutil/gitrefresh.sh --yes --branch "$BRANCH"
