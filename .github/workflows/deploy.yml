@@ -27,4 +27,5 @@ jobs:
         env:
           BRANCH: ${{ github.ref_name }}
         run: |
-          sudo --chdir=/Users/nick/scripts/MoneyManagementExport /Users/nick/scripts/pyutil/gitrefresh.sh --yes --branch "$BRANCH"
+          cd ~/scripts/MoneyManagementExport 
+          ~/scripts/pyutil/gitrefresh.sh --yes --branch "$BRANCH"
